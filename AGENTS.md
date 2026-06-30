@@ -83,7 +83,7 @@ vercel --prod
 - [x] Tahap 3: MediaPipe JS — kamera + gesture detection
 - [x] Tahap 4: Integrasi engine + gesture + UI fungsional
 - [ ] Tahap 5: FastAPI backend + deploy ke Vercel
-- [ ] Tahap 6: Beautify — CSS polish + animasi
+- [x] Tahap 6: Beautify — CSS polish + animasi
 
 ## Gotchas
 

@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
@@ -9,4 +10,5 @@ async def health():
     return {"status": "ok"}
 
 
-app.mount("/", StaticFiles(directory="public", html=True), name="public")
+if not os.environ.get("VERCEL"):
+    app.mount("/", StaticFiles(directory="public", html=True), name="public")
