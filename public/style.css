@@ -1,0 +1,186 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #1a1a2e;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#app {
+  text-align: center;
+  padding: 20px;
+  max-width: 720px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 2px;
+  margin-bottom: 20px;
+}
+
+#game-container {
+  position: relative;
+  width: 640px;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+#webcam {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  display: block;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#ui-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+#score {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#status {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+
+#countdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+  font-weight: 800;
+  color: #ffd700;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  display: none;
+}
+
+#choices {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  display: none;
+}
+
+#player-choice, #computer-choice {
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+#player-choice {
+  color: #4fc3f7;
+}
+
+#computer-choice {
+  color: #ef5350;
+}
+
+#vs {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+#result {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  display: none;
+}
+
+#result.menang { color: #ffd700; }
+#result.kalah { color: #ef5350; }
+#result.seri { color: #ffffff; }
+
+#controls {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+button {
+  background: #0f3460;
+  color: #fff;
+  border: none;
+  padding: 10px 32px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #1a5276;
+}
+
+button#btn-reset {
+  background: transparent;
+  border: 1px solid #555;
+}
+
+button#btn-reset:hover {
+  background: rgba(255,255,255,0.1);
+}

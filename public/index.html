@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gunting-Batu-Kertas Tanpa Sentuh</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <h1>Gunting-Batu-Kertas</h1>
+    <p class="subtitle">Tanpa Sentuh</p>
+
+    <div id="game-container">
+      <video id="webcam" autoplay playsinline></video>
+      <canvas id="overlay"></canvas>
+      <div id="ui-overlay">
+        <div id="score">0 - 0</div>
+        <div id="status">Tekan MULAI untuk bermain</div>
+        <div id="countdown"></div>
+        <div id="choices">
+          <span id="player-choice"></span>
+          <span id="vs">VS</span>
+          <span id="computer-choice"></span>
+        </div>
+        <div id="result"></div>
+      </div>
+    </div>
+
+    <div id="controls">
+      <button id="btn-mulai">MULAI</button>
+      <button id="btn-reset">Reset Skor</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
