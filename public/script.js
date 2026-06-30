@@ -1,5 +1,5 @@
 import { FilesetResolver, GestureRecognizer } from
-  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm/vision_bundle.js";
+  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18";
 
 const TIMER = { COUNTDOWN: 3.0, THROW: 1.0, COOLDOWN: 1.5 };
 
@@ -19,6 +19,8 @@ const MAPPING_GESTUR = {
   Open_Palm: "kertas",
   Victory: "gunting",
 };
+
+const EMOJI = { batu: "✊", kertas: "✋", gunting: "✌️" };
 
 const HAND_CONNECTIONS = [
   [0, 1], [1, 2], [2, 3], [3, 4],
@@ -125,58 +127,87 @@ class GameEngine {
 
 const engine = new GameEngine();
 const el = (id) => document.getElementById(id);
+const kontainer = el("game-container");
 
 function updateUI(gesturPemain) {
   const state = engine.state;
   el("score").textContent = `${engine.skorPemain} - ${engine.skorKomputer}`;
+  el("babak").textContent = engine.babak ? `Babak ${engine.babak}` : "";
 
   const teksGestur = gesturPemain ? ` (${gesturPemain})` : "";
+  const btnMulai = el("btn-mulai");
 
   if (state === "READY") {
     el("status").textContent = "Tekan MULAI untuk bermain" + teksGestur;
     el("countdown").style.display = "none";
     el("choices").style.display = "none";
+    el("choices").classList.remove("show");
     el("result").style.display = "none";
+    el("result").classList.remove("show");
+    kontainer.classList.remove("running");
+    btnMulai.disabled = false;
   } else if (state === "COUNTDOWN") {
     const sisa = engine.sisaCountdown();
     el("countdown").style.display = "block";
     el("countdown").textContent = sisa;
+    el("countdown").classList.remove("pop");
+    void el("countdown").offsetWidth;
+    el("countdown").classList.add("pop");
     el("choices").style.display = "none";
+    el("choices").classList.remove("show");
     el("result").style.display = "none";
+    el("result").classList.remove("show");
     el("status").textContent =
       (sisa === 1 ? "SEKARANG!" : "TUNJUKKAN GESTUR ANDA...") + teksGestur;
+    kontainer.classList.add("running");
+    btnMulai.disabled = true;
   } else if (state === "THROW") {
     const sisa = engine.sisaThrow();
     el("countdown").style.display = "none";
+    el("countdown").classList.remove("pop");
     el("status").textContent =
-      sisa > 0
-        ? `Bekukan tangan... ${sisa.toFixed(1)}s`
-        : "Memproses...";
-    el("player-choice").textContent = engine.pilihanPemain
-      ? `Kamu: ${engine.pilihanPemain}`
-      : "";
-    el("computer-choice").textContent = "";
+      sisa > 0 ? `Bekukan tangan... ${sisa.toFixed(1)}s` : "Memproses...";
     el("choices").style.display = engine.pilihanPemain ? "flex" : "none";
+    if (engine.pilihanPemain) {
+      const emoji = EMOJI[engine.pilihanPemain] || "";
+      el("player-choice").innerHTML =
+        `<span class="gesture-emoji">${emoji}</span>Kamu: ${engine.pilihanPemain}`;
+      el("choices").classList.add("show");
+    }
+    el("computer-choice").textContent = "";
     el("result").style.display = "none";
+    el("result").classList.remove("show");
+    btnMulai.disabled = true;
   } else if (state === "RESULT") {
     el("status").textContent = "Hasil Babak";
     el("countdown").style.display = "none";
-    el("player-choice").textContent = `Kamu: ${engine.pilihanPemain}`;
-    el("computer-choice").textContent = `Komputer: ${engine.pilihanKomputer}`;
+    el("countdown").classList.remove("pop");
+
+    const emojiP = EMOJI[engine.pilihanPemain] || "";
+    const emojiK = EMOJI[engine.pilihanKomputer] || "";
+    el("player-choice").innerHTML =
+      `<span class="gesture-emoji">${emojiP}</span>Kamu: ${engine.pilihanPemain}`;
+    el("computer-choice").innerHTML =
+      `<span class="gesture-emoji">${emojiK}</span>Komputer: ${engine.pilihanKomputer}`;
     el("choices").style.display = "flex";
-    el("result").style.display = "block";
+    el("choices").classList.add("show");
 
     const resultEl = el("result");
     if (engine.pemenang === "pemain") {
       resultEl.textContent = "KAMU MENANG!";
-      resultEl.className = "menang";
+      resultEl.className = "menang show";
     } else if (engine.pemenang === "komputer") {
       resultEl.textContent = "KOMPUTER MENANG!";
-      resultEl.className = "kalah";
+      resultEl.className = "kalah show";
     } else {
       resultEl.textContent = "SERI!";
-      resultEl.className = "seri";
+      resultEl.className = "seri show";
     }
+
+    el("score").classList.remove("pop");
+    void el("score").offsetWidth;
+    el("score").classList.add("pop");
+    btnMulai.disabled = true;
   }
 }
 
@@ -210,7 +241,7 @@ async function init() {
     el("status").textContent = "Memuat model...";
 
     const vision = await FilesetResolver.forVisionTasks(
-      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm"
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18/wasm"
     );
 
     recognizer = await GestureRecognizer.createFromOptions(vision, {
@@ -292,6 +323,10 @@ el("btn-mulai").addEventListener("click", () => {
 
 el("btn-reset").addEventListener("click", () => {
   engine.reset();
+  el("score").classList.remove("pop");
+  el("babak").textContent = "";
+  el("btn-mulai").disabled = false;
+  kontainer.classList.remove("running");
 });
 
 init();
