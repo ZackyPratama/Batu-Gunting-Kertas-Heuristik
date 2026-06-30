@@ -80,7 +80,7 @@ vercel --prod
 
 - [x] Tahap 1: Setup — folder api/, public/, files dasar, vercel.json, requirements
 - [x] Tahap 2: Port game_engine.py ke JS — class GameEngine + aturan menang
-- [ ] Tahap 3: MediaPipe JS — kamera + gesture detection
+- [x] Tahap 3: MediaPipe JS — kamera + gesture detection
 - [ ] Tahap 4: Integrasi engine + gesture + UI fungsional
 - [ ] Tahap 5: FastAPI backend + deploy ke Vercel
 - [ ] Tahap 6: Beautify — CSS polish + animasi
@@ -91,3 +91,6 @@ vercel --prod
 - Web version requires HTTPS for camera access (Vercel auto)
 - Camera 640x480, always flip horizontally for mirror effect
 - No test framework, linter, or typechecker configured
+- `script.js` uses ES Modules (`type="module"`) — requires modern browser, no IE support
+- MediaPipe Tasks Vision JS loads WASM from CDN — requires internet connection at first load
+- Model file must be inside `public/` directory for browser to access it
