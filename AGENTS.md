@@ -81,7 +81,7 @@ vercel --prod
 - [x] Tahap 1: Setup — folder api/, public/, files dasar, vercel.json, requirements
 - [x] Tahap 2: Port game_engine.py ke JS — class GameEngine + aturan menang
 - [x] Tahap 3: MediaPipe JS — kamera + gesture detection
-- [ ] Tahap 4: Integrasi engine + gesture + UI fungsional
+- [x] Tahap 4: Integrasi engine + gesture + UI fungsional
 - [ ] Tahap 5: FastAPI backend + deploy ke Vercel
 - [ ] Tahap 6: Beautify — CSS polish + animasi
 

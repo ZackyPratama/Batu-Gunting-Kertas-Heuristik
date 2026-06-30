@@ -130,8 +130,10 @@ function updateUI(gesturPemain) {
   const state = engine.state;
   el("score").textContent = `${engine.skorPemain} - ${engine.skorKomputer}`;
 
+  const teksGestur = gesturPemain ? ` (${gesturPemain})` : "";
+
   if (state === "READY") {
-    el("status").textContent = "Tekan MULAI untuk bermain";
+    el("status").textContent = "Tekan MULAI untuk bermain" + teksGestur;
     el("countdown").style.display = "none";
     el("choices").style.display = "none";
     el("result").style.display = "none";
@@ -142,12 +144,14 @@ function updateUI(gesturPemain) {
     el("choices").style.display = "none";
     el("result").style.display = "none";
     el("status").textContent =
-      sisa === 1 ? "SEKARANG!" : "TUNJUKKAN GESTUR ANDA...";
+      (sisa === 1 ? "SEKARANG!" : "TUNJUKKAN GESTUR ANDA...") + teksGestur;
   } else if (state === "THROW") {
     const sisa = engine.sisaThrow();
     el("countdown").style.display = "none";
     el("status").textContent =
-      sisa > 0 ? `Bekukan tangan... ${sisa.toFixed(1)}s` : "Memproses...";
+      sisa > 0
+        ? `Bekukan tangan... ${sisa.toFixed(1)}s`
+        : "Memproses...";
     el("player-choice").textContent = engine.pilihanPemain
       ? `Kamu: ${engine.pilihanPemain}`
       : "";
@@ -240,7 +244,13 @@ async function init() {
 
     requestAnimationFrame(loop);
   } catch (err) {
-    el("status").textContent = "Gagal: " + err.message;
+    if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+      el("status").textContent = "Akses kamera ditolak. Izinkan kamera di browser.";
+    } else if (err.name === "NotFoundError") {
+      el("status").textContent = "Kamera tidak ditemukan.";
+    } else {
+      el("status").textContent = "Gagal: " + err.message;
+    }
     console.error(err);
   }
 }
