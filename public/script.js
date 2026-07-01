@@ -128,6 +128,7 @@ class GameEngine {
 const engine = new GameEngine();
 const el = (id) => document.getElementById(id);
 const kontainer = el("game-container");
+let countdownTerakhir = null;
 
 function updateUI(gesturPemain) {
   const state = engine.state;
@@ -150,9 +151,12 @@ function updateUI(gesturPemain) {
     const sisa = engine.sisaCountdown();
     el("countdown").style.display = "block";
     el("countdown").textContent = sisa;
-    el("countdown").classList.remove("pop");
-    void el("countdown").offsetWidth;
-    el("countdown").classList.add("pop");
+    if (sisa !== countdownTerakhir) {
+      countdownTerakhir = sisa;
+      el("countdown").classList.remove("pop");
+      void el("countdown").offsetWidth;
+      el("countdown").classList.add("pop");
+    }
     el("choices").style.display = "none";
     el("choices").classList.remove("show");
     el("result").style.display = "none";
@@ -193,6 +197,7 @@ function updateUI(gesturPemain) {
     el("choices").classList.add("show");
 
     const resultEl = el("result");
+    resultEl.style.display = "";
     if (engine.pemenang === "pemain") {
       resultEl.textContent = "KAMU MENANG!";
       resultEl.className = "menang show";

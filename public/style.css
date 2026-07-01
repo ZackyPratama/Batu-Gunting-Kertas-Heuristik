@@ -145,8 +145,8 @@ h1 {
 
 @keyframes countPop {
   0% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
-  40% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+  20% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
 #choices {
